@@ -1,0 +1,68 @@
+{% extends "infsoc/base.html" %}
+
+
+{% block content %}
+
+{% if aprobado %}
+	<p>{{aprobado}}</p>
+
+{% else %}
+	<div class="container">
+		<h3>Detalle transacción</h3>
+		<hr>
+
+		<div class="row">
+			<div class="col-sm-2">Medicamento: </div>
+			<div class="col-sm-3">{{transaccion.medicamento}}</div>
+		</div>
+
+		<div class=row>
+			{% if transaccion.tipo == 'COMPRA' %}	
+			<div class="col-sm-2">Comprador: </div>
+			<div class="col-sm-3">
+				{{ transaccion.comprador.first_name }} {{ transaccion.comprador.last_name }} 
+			</div>
+			{% else %}
+				<div class="col-sm-2">Vendedor: </div>
+				<div class="col-sm-3">
+				{{ transaccion.vendedor.first_name }} {{ transaccion.vendedor.last_name }}
+			</div>
+			{% endif %}
+		</div>	
+		<div class=row>
+			<div class="col-sm-2">Correo: </div>
+			{% if transaccion.tipo == 'COMPRA' %}	
+			<div class="col-sm-3">
+				{{ transaccion.comprador.email }}
+			</div>
+			{% else %}
+				<div class="col-sm-3">
+				{{ transaccion.vendedor.email }}
+			</div>
+			{% endif %}
+		</div>	
+		<div class="row">
+			<div class="col-sm-2">Precio: </div>
+			<div class="col-sm-3">${{transaccion.precio}}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2">Líneas de metro: </div>
+			<div class="col-sm-3">{% for linea in transaccion.lineas.all %}
+								{{ linea.numero }} 
+								{% endfor %}
+			</div>
+		</div>
+		<hr>
+		<form method="POST">
+			{% csrf_token %}
+			<div class="row">
+		        <div class="col-md-4 text-left"> 
+			  		 <button type="submit" class="btn btn-primary" style="margin: auto;">Hacer pedido</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endif %}
+
+{% endblock %}
+

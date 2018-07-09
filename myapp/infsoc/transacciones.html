@@ -1,0 +1,31 @@
+{% extends "infsoc/base.html" %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+	<h3>Tus transacciones</h3>
+		<div class="row" style="font-weight: bold" style="margin-bottom: 30px;">
+			<div class="col"> Medicamento </div>
+			<div class="col"> Persona </div>
+			<div class="col"> Tipo </div>
+			<div class="col"> Fecha </div>
+			<div class="col"> Estado </div>
+		</div>
+		{% for transaccion in transacciones1 %}
+			<div class="row">
+				<div class="col"> {{transaccion.medicamento}} </a></div>
+				{% if transaccion.tipo == "COMPRA" %}
+					<div class="col"> {{transaccion.vendedor}} </div>
+				{% else %}
+					<div class="col"> {{transaccion.vendedor}} </div>
+				{% endif %}
+				<div class="col"> {{transaccion.tipo}} </div>
+				<div class="col"> {{transaccion.fecha}} </div>
+				<div class="col"> {{transaccion.estado}} </div>
+			</div>
+		{% endfor %}
+</div>
+
+{% endblock %}
+

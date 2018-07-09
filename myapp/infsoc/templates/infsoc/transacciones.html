@@ -1,0 +1,52 @@
+{% extends "infsoc/base.html" %}
+
+
+{% block content %}
+
+<div class="container-fluid" style="margin-left: 20px;">
+	<h3>Tus transacciones</h3>
+	<hr>
+		<div class="row" style="font-weight: bold" style="margin-bottom: 30px;">
+			<div class="col"> Medicamento </div>
+			<div class="col"> Persona </div>
+			<div class="col"> Email </div>
+			<div class="col"> Tipo de transacción </div>
+			<div class="col"> Fecha de la publicación</div>
+			<div class="col"> Estado </div>
+		</div>
+		{% for transaccion in transacciones1 %}
+			<div class="row">
+				<div class="col"> {{transaccion.medicamento}} </a></div>
+				{% if transaccion.tipo == "COMPRA" %}
+					{% if transaccion.vendedor == user %}	
+						<div class="col"> {{transaccion.comprador.first_name}} </div>
+						<div class="col"> {{transaccion.comprador.email}} </div>
+					{% else %}
+						<div class="col"> {{transaccion.vendedor.first_name}} </div>
+						<div class="col"> {{transaccion.vendedor.email}} </div>
+					{% endif %}
+				{% else %}
+					{% if transaccion.vendedor == user %}
+					 	<div class="col"> {{transaccion.comprador.first_name}} </div>
+					 	<div class="col"> {{transaccion.comprador.email}} </div>
+					{% else %}
+						<div class="col"> {{transaccion.vendedor.first_name}} </div>
+						<div class="col"> {{transaccion.vendedor.email}} </div>
+					{% endif %}
+				{% endif %}
+				<div class="col"> {{transaccion.tipo}} </div>
+				<div class="col"> {{transaccion.fecha}} </div>
+				<div class="col" style="color: {% if transaccion.estado == "PUESTO" %}
+												red;"
+											   {% elif transaccion.estado == "CONTACTADO" %}
+											    orange;"
+											   {% else %}
+											    green;"
+											   {% endif %}
+				> {{transaccion.estado}} </div>
+			</div>
+		{% endfor %}
+</div>
+
+{% endblock %}
+

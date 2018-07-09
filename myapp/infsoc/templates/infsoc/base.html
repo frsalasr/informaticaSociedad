@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block headcontent %}
+    {% endblock %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <title>LupusHelper</title>
+    <style type="text/css">
+      <style>
+
+p {
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+
+/* SIDEBAR STYLE */
+
+#sidebar {
+    width: 200px;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #5f0f82;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #9013c6;
+    text-align: center;
+}
+
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #9013c6;
+    background: #fff;
+}
+
+#sidebar ul li a, ul li a:hover, ul li a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+.dropright:click{
+
+}
+.dropright:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; // remove the gap so it doesn't close
+ }
+
+.page-header{
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: #5f0f82;
+    color: #fff;
+}
+.page-header h1{
+  font-size: 60px;
+  text-align: center;
+  padding: 10px 0;
+}
+.page-header p{
+  font-size: 15px;
+  text-align: center;
+  margin-top: -35px; 
+}
+
+.logout {
+  margin-top: 200px;
+}
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: calc(100% - 200px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 100px;
+    right: 0;
+}
+
+</style>
+  </head>
+    <body>
+        <div class="navbar">
+          <div class="page-header">
+            <h1>LupusHelper</h1>
+            <p>Transacciones de medicamentos a falta de ges.</p>
+          </div>
+
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+              {% if user.is_authenticated %}
+              <div class="sidebar-header">
+                  <h3>Bienvenido</h3>
+                  <p style="font-size: 20px">{{ user.first_name }}</p>
+              </div>
+              <ul class="list-unstyled components">
+                 <ul class="list-unstyled components">
+                    <li>
+                      <a href="">Ver perfil</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crear' %}">
+                        Publicar medicamento
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'buscador' %}">Buscar Medicamento</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'transacciones' %}">Ver transacciones</a>
+                    </li>
+                    <li class="logout">
+                      <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    </li>
+                </ul>
+              </ul>
+              {% else %}
+              <ul class="list-unstyled components" style="margin-top: 100px">
+                <ul class="list-unstyled components">
+                    <li>
+                      <a href="{% url 'login' %}">Ingresar</a>
+                    </li>
+                </ul>
+              </ul>
+              {% endif %}
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                    <!-- Dentro de este bloque irá todo lo otro -->
+                    {% block content %}
+                    {% endblock %}                
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  </body>
+</html>
